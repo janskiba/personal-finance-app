@@ -16,7 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@personal-finance-app/shared/types": ["shared/types/src/index.ts"],
-      "@personal-finance-app/shared/util": ["shared/util/src/index.ts"]
+      "@personal-finance-app/utils": ["shared/utils/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
