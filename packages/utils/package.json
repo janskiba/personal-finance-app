@@ -1,5 +1,5 @@
 {
-  "name": "@personal-finance-app/shared/util",
+  "name": "@personal-finance-app/utils",
   "version": "0.0.1",
   "private": true,
   "type": "commonjs",
