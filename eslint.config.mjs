@@ -5,8 +5,14 @@ export default [
   ...nx.configs['flat/base'],
   ...nx.configs['flat/typescript'],
   ...nx.configs['flat/javascript'],
-  ...nx.configs['flat/angular'],
-  ...nx.configs['flat/angular-template'],
+  ...nx.configs['flat/angular'].map((config) => ({
+    ...config,
+    files: ['apps/frontend/**/*.ts'],
+  })),
+  ...nx.configs['flat/angular-template'].map((config) => ({
+    ...config,
+    files: ['apps/frontend/**/*.html'],
+  })),
   {
     ...playwright.configs['flat/recommended'],
     files: [
