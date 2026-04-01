@@ -7,14 +7,14 @@ export default [
   ...nx.configs['flat/javascript'],
   ...nx.configs['flat/angular'],
   ...nx.configs['flat/angular-template'],
-  {
-    ...playwright.configs['flat/recommended'],
+  ...playwright.configs['flat/recommended'].map((config) => ({
+    ...config,
     files: [
       'apps/frontend-e2e/**/*.ts',
       'apps/frontend-e2e/**/*.js',
       'apps/frontend-e2e/playwright.config.ts',
     ],
-  },
+  })),
   {
     ignores: ['**/dist', '**/out-tsc', '**/vitest.config.*.timestamp*'],
   },
