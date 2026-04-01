@@ -5,16 +5,22 @@ export default [
   ...nx.configs['flat/base'],
   ...nx.configs['flat/typescript'],
   ...nx.configs['flat/javascript'],
-  ...nx.configs['flat/angular'],
-  ...nx.configs['flat/angular-template'],
-  ...playwright.configs['flat/recommended'].map((config) => ({
+  ...nx.configs['flat/angular'].map((config) => ({
     ...config,
+    files: ['apps/frontend/**/*.ts'],
+  })),
+  ...nx.configs['flat/angular-template'].map((config) => ({
+    ...config,
+    files: ['apps/frontend/**/*.html'],
+  })),
+  {
+    ...playwright.configs['flat/recommended'],
     files: [
       'apps/frontend-e2e/**/*.ts',
       'apps/frontend-e2e/**/*.js',
       'apps/frontend-e2e/playwright.config.ts',
     ],
-  })),
+  },
   {
     ignores: ['**/dist', '**/out-tsc', '**/vitest.config.*.timestamp*'],
   },
