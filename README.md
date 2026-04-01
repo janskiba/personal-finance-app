@@ -13,6 +13,28 @@ This app is developed to learn how to build a fullstack application with:
 
 The goal is to improve architecture, API design, state management, and clean project organization in a real-world style setup.
 
+## Local Setup (PostgreSQL + API)
+
+1. Create local environment file:
+
+```bash
+cp .env.example .env
+```
+
+2. Start local PostgreSQL with Docker Compose:
+
+```bash
+docker compose up -d
+```
+
+3. Start API:
+
+```bash
+pnpm nx serve backend
+```
+
+The API reads database connection settings from environment variables (`DATABASE_HOST`, `DATABASE_PORT`, `DATABASE_NAME`, `DATABASE_USER`, `DATABASE_PASSWORD`, `DATABASE_URL`) and is expected to connect to the local PostgreSQL instance from Docker Compose.
+
 ## Basic Nx Commands
 
 Use these commands from the workspace root.
