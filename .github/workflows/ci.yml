@@ -26,13 +26,13 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Lint
-        run: pnpm nx lint frontend backend
+        run: pnpm nx run-many -t lint --projects=frontend,backend
 
       - name: Test
-        run: pnpm nx test frontend backend
+        run: pnpm nx run-many -t test --projects=frontend,backend
 
       - name: Build
-        run: pnpm nx build frontend backend
+        run: pnpm nx run-many -t build --projects=frontend,backend
 
       - name: Install Playwright Browsers
         run: pnpm exec playwright install --with-deps chromium
