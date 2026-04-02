@@ -53,8 +53,10 @@ pnpm nx build utils
 # Run tests
 pnpm nx test frontend
 pnpm nx test backend
-pnpm nx test backend-e2e
-pnpm nx test frontend-e2e
+
+# Run frontend e2e tests
+pnpm exec playwright install #run only once before first test execution
+pnpm nx e2e frontend-e2e
 
 # Lint projects
 pnpm nx lint frontend
