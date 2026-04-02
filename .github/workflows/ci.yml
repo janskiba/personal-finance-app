@@ -38,4 +38,4 @@ jobs:
         run: pnpm exec playwright install --with-deps chromium
 
       - name: Frontend E2E (Playwright)
-        run: pnpm nx e2e-ci frontend-e2e
+        run: pnpm nx e2e frontend-e2e
