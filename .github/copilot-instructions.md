@@ -31,7 +31,7 @@
 - Do not place complex business logic in components or templates.
 - Keep templates simple and readable; avoid complex inline expressions.
 - Prefer moving derived state and transformation logic into `computed`, helpers, presenters, or services.
-- Prefer strongly typed `input`, `output`, forms, models, and API mappings.
+- Prefer strongly typed `input`, `output`, forms, asdfasdfmodels, and API mappings.
 - Prefer reactive patterns and predictable state flow.
 - For non-trivial forms, prefer Reactive Forms.
 - Keep HTTP calls, DTO mapping, and backend integration logic out of components.
