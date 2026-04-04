@@ -93,10 +93,11 @@
 
 ## Commits
 
-- Write commit messages in Conventional Commits style when asked to suggest commits.
+- Write commit messages in Conventional Commits style.
+- Always prefix the commit message with the task ID inferred from the current branch name when one is present. This prefix is required, not optional.
 - Format: `<task-id>: <type>(optional-scope): short imperative summary`
-- Extract the task ID from the current branch name when possible.
-- Example: on branch `SCRUM-22-ai-config`, prefix the commit message with `SCRUM-22:`.
+- If the current branch matches a task pattern such as `SCRUM-57-base-flow-diagram`, the commit message must start with `SCRUM-57:`.
+- If no task ID can be inferred from the branch name, use the standard Conventional Commits format without the task prefix.
 - Example full commit message: `SCRUM-22: feat(ai): add Copilot repository instructions`
 - Keep commits small and focused. One commit should represent one clear change or concern.
 - Keep commit messages short and easy to scan.
