@@ -13,6 +13,16 @@ This app is developed to learn how to build a fullstack application with:
 
 The goal is to improve architecture, API design, state management, and clean project organization in a real-world style setup.
 
+## Viewing Mermaid Diagrams
+
+Some documentation files in `docs/` include Mermaid diagrams, for example `docs/guest-vs-authenticated-data-flow.md`.
+
+You can view them in a few ways:
+
+- **VS Code Markdown Preview**: open the Markdown file and press `Ctrl+Shift+V`, or use **Open Preview to the Side**.
+- **GitHub**: Mermaid code blocks render automatically when viewing the Markdown file in the repository web UI.
+- **Other editors/viewers**: use any Markdown viewer that supports Mermaid fenced blocks (` ```mermaid `).
+
 ## Local Setup (PostgreSQL + API)
 
 1. Create local environment file:
