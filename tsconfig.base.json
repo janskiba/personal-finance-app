@@ -13,10 +13,9 @@
     "lib": ["es2020", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
-    "baseUrl": ".",
     "paths": {
-      "@packages/types": ["packages/types/src/index.ts"],
-      "@packages/utils": ["packages/utils/src/index.ts"]
+      "@packages/types": ["./packages/types/src/index.ts"],
+      "@packages/utils": ["./packages/utils/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
