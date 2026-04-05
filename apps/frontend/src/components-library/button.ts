@@ -22,7 +22,7 @@ type ButtonType = 'button' | 'submit' | 'reset';
       }
 
       <span class="inline-flex items-center">
-        <ng-content></ng-content>
+        <ng-content />
       </span>
     </button>
   `,
