@@ -1,1 +1,17 @@
-/* You can add global styles to this file, and also import other style files */
+@import 'tailwindcss';
+
+@layer base {
+  label {
+    @apply text-xs font-semibold uppercase tracking-wide text-slate-400 mb-0.5;
+  }
+
+  textarea,
+  input:not([type='checkbox']):not([type='radio']):not([type='range']):not([type='file']) {
+    @apply w-full rounded-xl bg-white px-4 py-3 text-sm text-slate-800 shadow-sm
+      ring-1 ring-slate-200 placeholder:text-slate-400
+      transition-shadow
+      hover:ring-slate-300
+      focus:outline-none focus:ring-2 focus:ring-teal-600 focus:ring-offset-1
+      disabled:cursor-not-allowed disabled:opacity-50;
+  }
+}
