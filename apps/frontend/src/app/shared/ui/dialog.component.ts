@@ -22,14 +22,14 @@ import { LucideDynamicIcon, LucideX } from '@lucide/angular';
     >
       <div [class]="panelClasses()">
         <!-- Header -->
-        <div class="flex items-center justify-between border-b border-slate-100 px-6 py-5">
-          <h2 class="text-lg font-semibold text-slate-900">
+        <div class="flex items-center justify-between border-b border-(--color-border) px-6 py-5">
+          <h2 class="text-lg font-semibold text-(--color-text)">
             <ng-content select="[dialog-title]" />
           </h2>
           <button
             type="button"
-            class="rounded-lg p-1 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600
-                   focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2"
+            class="rounded-lg p-1 text-(--color-text-muted) transition-colors hover:bg-(--color-bg) hover:text-(--color-text)
+                   focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--color-primary) focus-visible:ring-offset-2"
             aria-label="Close dialog"
             (click)="closeDialog.emit()"
           >
@@ -43,7 +43,7 @@ import { LucideDynamicIcon, LucideX } from '@lucide/angular';
         </div>
 
         <!-- Footer -->
-        <div class="flex items-center justify-end gap-3 border-t border-slate-100 px-6 py-4">
+        <div class="flex items-center justify-end gap-3 border-t border-(--color-border) px-6 py-4">
           <ng-content select="[dialog-actions]" />
         </div>
       </div>
@@ -63,6 +63,6 @@ export class DialogComponent {
       lg: 'max-w-lg',
       xl: 'max-w-xl',
     };
-    return `relative flex max-h-[80vh] w-full ${widthMap[this.width()]} flex-col rounded-2xl bg-white shadow-xl`;
+    return `relative flex max-h-[80vh] w-full ${widthMap[this.width()]} flex-col rounded-2xl bg-(--color-surface) shadow-xl`;
   });
 }

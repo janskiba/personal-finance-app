@@ -18,7 +18,7 @@ export class CardComponent {
   readonly elevated = input(false);
 
   readonly classes = computed(() => {
-    const base = 'rounded-xl bg-white';
+    const base = 'rounded-xl bg-(--color-surface)';
 
     const paddingMap: Record<CardPadding, string> = {
       none: '',

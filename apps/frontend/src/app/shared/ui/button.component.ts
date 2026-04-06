@@ -39,14 +39,14 @@ export class ButtonComponent {
   readonly classes = computed(() => {
     const base =
       'inline-flex items-center justify-center gap-2 rounded-lg font-medium whitespace-nowrap transition-colors select-none ' +
-      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2 ' +
+      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--color-primary) focus-visible:ring-offset-2 ' +
       'disabled:pointer-events-none disabled:opacity-50';
 
     const variantMap: Record<ButtonVariant, string> = {
-      primary: 'bg-teal-600 text-white hover:bg-teal-700 active:bg-teal-800',
+      primary: 'bg-(--color-primary) text-white hover:opacity-90 active:opacity-80',
       secondary:
-        'border border-slate-300 bg-white text-slate-900 hover:bg-slate-50 active:bg-slate-100',
-      ghost: 'bg-transparent text-slate-700 hover:bg-slate-100 active:bg-slate-200',
+        'border border-(--color-border) bg-(--color-surface) text-(--color-text) hover:bg-(--color-bg) active:opacity-80',
+      ghost: 'bg-transparent text-(--color-text-muted) hover:bg-(--color-bg) active:opacity-80',
       danger: 'bg-red-600 text-white hover:bg-red-700 active:bg-red-800',
     };
 
