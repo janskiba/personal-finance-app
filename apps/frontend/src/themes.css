@@ -1,0 +1,18 @@
+:root,
+[data-theme='light'] {
+  --color-bg: #f7f6f2;
+  --color-surface: #f9f8f5;
+  --color-text: #28251d;
+  --color-text-muted: #5c5a55;
+  --color-primary: #01696f;
+  --color-border: oklch(from #28251d l c h / 0.12);
+}
+
+[data-theme='dark'] {
+  --color-bg: #171614;
+  --color-surface: #1c1b19;
+  --color-text: #e5e4e2;
+  --color-text-muted: #b0ada9;
+  --color-primary: #4f98a3;
+  --color-border: oklch(from #cdccca l c h / 0.12);
+}
