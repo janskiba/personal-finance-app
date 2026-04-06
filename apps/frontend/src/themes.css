@@ -1,6 +1,7 @@
 :root,
 [data-theme='light'] {
-  --color-bg: #f7f6f2;
+  --color-bg: #f5f6f4;
+  --color-sidenav-bg: #f1f4f6;
   --color-surface: #f9f8f5;
   --color-text: #28251d;
   --color-text-muted: #5c5a55;
@@ -10,6 +11,7 @@
 
 [data-theme='dark'] {
   --color-bg: #171614;
+  --color-sidenav-bg: #1c1b19;
   --color-surface: #1c1b19;
   --color-text: #e5e4e2;
   --color-text-muted: #b0ada9;
