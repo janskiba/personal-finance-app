@@ -50,14 +50,14 @@ describe('Button', () => {
 
   it('includes primary variant classes by default', () => {
     const button = fixture.debugElement.query(By.css('button')).nativeElement as HTMLButtonElement;
-    expect(button.className).toContain('bg-teal-600');
+    expect(button.className).toContain('bg-(--color-primary)');
   });
 
   it('applies secondary variant classes', () => {
     fixture.componentRef.setInput('variant', 'secondary');
     fixture.detectChanges();
     const button = fixture.debugElement.query(By.css('button')).nativeElement as HTMLButtonElement;
-    expect(button.className).toContain('border-slate-300');
+    expect(button.className).toContain('border-(--color-border)');
   });
 
   it('applies danger variant classes', () => {
