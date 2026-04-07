@@ -4,6 +4,13 @@ import { App } from './app';
 
 describe('App', () => {
   beforeEach(async () => {
+    localStorage.clear();
+
+    Object.defineProperty(window, 'matchMedia', {
+      writable: true,
+      value: vi.fn().mockReturnValue({ matches: false }),
+    });
+
     await TestBed.configureTestingModule({
       imports: [App],
       providers: [provideRouter([])],

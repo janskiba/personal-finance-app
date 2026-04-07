@@ -6,6 +6,13 @@ describe('HeaderComponent', () => {
   let fixture: ComponentFixture<HeaderComponent>;
 
   beforeEach(async () => {
+    localStorage.clear();
+
+    Object.defineProperty(window, 'matchMedia', {
+      writable: true,
+      value: vi.fn().mockReturnValue({ matches: false }),
+    });
+
     await TestBed.configureTestingModule({
       imports: [HeaderComponent],
     }).compileComponents();

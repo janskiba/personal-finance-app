@@ -6,6 +6,13 @@ describe('ThemeService', () => {
   let service: ThemeService;
 
   beforeEach(() => {
+    localStorage.clear();
+
+    Object.defineProperty(window, 'matchMedia', {
+      writable: true,
+      value: vi.fn().mockReturnValue({ matches: false }),
+    });
+
     TestBed.configureTestingModule({});
     service = TestBed.inject(ThemeService);
   });
