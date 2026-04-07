@@ -18,3 +18,15 @@
   --color-primary: #4f98a3;
   --color-border: oklch(from #cdccca l c h / 0.12);
 }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --color-bg: #171614;
+    --color-sidenav-bg: #1c1b19;
+    --color-surface: #1c1b19;
+    --color-text: #e5e4e2;
+    --color-text-muted: #b0ada9;
+    --color-primary: #4f98a3;
+    --color-border: oklch(from #cdccca l c h / 0.12);
+  }
+}
