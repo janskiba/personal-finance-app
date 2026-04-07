@@ -14,6 +14,7 @@ import { ThemeService } from '../theme/theme.service';
       <button
         type="button"
         aria-label="Toggle dark mode"
+        data-testid="toggle-theme-button"
         class="rounded-lg p-2 text-(--color-text-muted) hover:bg-(--color-bg) hover:text-(--color-text)"
         (click)="themeService.toggleTheme()"
       >

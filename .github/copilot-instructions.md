@@ -70,13 +70,12 @@
 - Do not introduce insecure fallback behavior just to make code “work.”
 - Flag security-sensitive changes clearly when authentication, authorization, file handling, tokens, or personal data are involved.
 
-## Testing
+## Testing rules
 
-- When adding or changing behavior, add or update tests where appropriate.
-- Prefer unit tests for business logic and integration tests for critical API flows.
-- Test observable behavior, not implementation details.
-- Cover success paths, validation failures, and important edge cases.
-- Do not remove tests just to make the build pass unless explicitly instructed.
+- Prefer a balanced testing strategy: unit tests for logic, integration tests for module behavior, and Playwright for critical end-to-end flows.
+- Do not generate brittle tests.
+- Prefer stable selectors and deterministic setup.
+- For Playwright-specific guidance, follow the dedicated instructions in `.github/instructions/playwright-tests.instructions.md`.
 
 ## Documentation
 
