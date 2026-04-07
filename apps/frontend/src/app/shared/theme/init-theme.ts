@@ -1,6 +1,7 @@
+export const APP_THEME_STORAGE_KEY = 'app-theme';
+
 export const initTheme = (): void => {
-  const key = 'app-theme';
-  const stored = localStorage.getItem(key);
+  const stored = localStorage.getItem(APP_THEME_STORAGE_KEY);
 
   const theme =
     stored === 'light' || stored === 'dark'

@@ -1,4 +1,5 @@
 import { Injectable, signal } from '@angular/core';
+import { APP_THEME_STORAGE_KEY } from './init-theme';
 
 export type Theme = 'light' | 'dark';
 
@@ -6,7 +7,7 @@ export type Theme = 'light' | 'dark';
   providedIn: 'root',
 })
 export class ThemeService {
-  private readonly storageKey = 'app-theme';
+  private readonly storageKey = APP_THEME_STORAGE_KEY;
   private readonly themeSignal = signal<Theme>(this.getInitialTheme());
 
   readonly theme = this.themeSignal.asReadonly();

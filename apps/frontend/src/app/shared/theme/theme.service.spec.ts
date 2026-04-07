@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { ThemeService } from './theme.service';
+import { APP_THEME_STORAGE_KEY } from './init-theme';
 
 describe('ThemeService', () => {
   let service: ThemeService;
@@ -35,7 +36,7 @@ describe('ThemeService', () => {
 
   it('should persist theme to localStorage when set', () => {
     service.setTheme('dark');
-    expect(localStorage.getItem('app-theme')).toBe('dark');
+    expect(localStorage.getItem(APP_THEME_STORAGE_KEY)).toBe('dark');
   });
 
   it('should apply data-theme attribute to document element', () => {
