@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { LucideDynamicIcon, LucideMoon, LucideUser } from '@lucide/angular';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { LucideDynamicIcon, LucideMoon, LucideSun, LucideUser } from '@lucide/angular';
+import { ThemeService } from '../theme/theme.service';
 
 @Component({
   selector: 'app-header',
@@ -13,9 +14,10 @@ import { LucideDynamicIcon, LucideMoon, LucideUser } from '@lucide/angular';
       <button
         type="button"
         aria-label="Toggle dark mode"
-        class="rounded-lg p-2 text-(--color-text-muted) hover:bg-(--color-bg) hover:text-(--color-text) focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--color-primary) transition-colors"
+        class="rounded-lg p-2 text-(--color-text-muted) hover:bg-(--color-bg) hover:text-(--color-text)"
+        (click)="themeService.toggleTheme()"
       >
-        <svg [lucideIcon]="moonIcon" [size]="20" aria-hidden="true"></svg>
+        <svg [lucideIcon]="colorModeIcon()" [size]="20" aria-hidden="true"></svg>
       </button>
 
       <button
@@ -29,6 +31,13 @@ import { LucideDynamicIcon, LucideMoon, LucideUser } from '@lucide/angular';
   `,
 })
 export class HeaderComponent {
-  protected readonly moonIcon = LucideMoon;
+  private readonly moonIcon = LucideMoon;
+  private readonly sunIcon = LucideSun;
   protected readonly userIcon = LucideUser;
+
+  protected readonly themeService = inject(ThemeService);
+
+  protected readonly colorModeIcon = computed(() =>
+    this.themeService.theme() === 'dark' ? this.sunIcon : this.moonIcon,
+  );
 }
