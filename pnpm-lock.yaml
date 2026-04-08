@@ -228,12 +228,15 @@ importers:
 
   packages/ui:
     dependencies:
-      '@angular/common':
-        specifier: ^21.2.0
-        version: 21.2.6(@angular/core@21.2.6(@angular/compiler@21.2.6)(rxjs@7.8.2))(rxjs@7.8.2)
       '@angular/core':
-        specifier: ^21.2.0
+        specifier: ~21.2.0
         version: 21.2.6(@angular/compiler@21.2.6)(rxjs@7.8.2)
+      '@angular/router':
+        specifier: ~21.2.0
+        version: 21.2.6(@angular/common@21.2.6(@angular/core@21.2.6(@angular/compiler@21.2.6)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.2.6(@angular/compiler@21.2.6)(rxjs@7.8.2))(@angular/platform-browser@21.2.6(@angular/common@21.2.6(@angular/core@21.2.6(@angular/compiler@21.2.6)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.2.6(@angular/compiler@21.2.6)(rxjs@7.8.2)))(rxjs@7.8.2)
+      '@lucide/angular':
+        specifier: ^1.7.0
+        version: 1.7.0(@angular/common@21.2.6(@angular/core@21.2.6(@angular/compiler@21.2.6)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.2.6(@angular/compiler@21.2.6)(rxjs@7.8.2))
 
   packages/utils:
     dependencies:
