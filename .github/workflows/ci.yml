@@ -26,10 +26,10 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Lint
-        run: pnpm nx run-many -t lint --projects=frontend,backend
+        run: pnpm nx run-many -t lint --projects=frontend,backend,ui
 
       - name: Test
-        run: pnpm nx run-many -t test --projects=frontend,backend
+        run: pnpm nx run-many -t test --projects=frontend,backend,ui
 
       - name: Build
         run: pnpm nx run-many -t build --projects=frontend,backend

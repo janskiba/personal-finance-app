@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, input, output } from '@an
 import { LucideDynamicIcon, LucideX } from '@lucide/angular';
 
 @Component({
-  selector: 'app-dialog',
+  selector: 'lib-dialog',
   standalone: true,
   imports: [LucideDynamicIcon],
   changeDetection: ChangeDetectionStrategy.OnPush,

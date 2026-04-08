@@ -6,7 +6,7 @@ type ButtonSize = 'sm' | 'md' | 'lg';
 type ButtonType = 'button' | 'submit' | 'reset';
 
 @Component({
-  selector: 'app-button',
+  selector: 'lib-button',
   standalone: true,
   imports: [LucideDynamicIcon],
   changeDetection: ChangeDetectionStrategy.OnPush,

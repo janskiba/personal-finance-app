@@ -17,14 +17,14 @@ const NAV_ITEMS = [
 ] as const;
 
 @Component({
-  selector: 'app-sidenav',
+  selector: 'lib-sidenav',
   standalone: true,
   imports: [RouterLink, RouterLinkActive, LucideDynamicIcon, ButtonComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <!-- Hamburger: only visible when sidebar is closed on mobile -->
     @if (!isOpen()) {
-      <app-button
+      <lib-button
         class="fixed top-2.5 left-3 z-60 lg:hidden"
         variant="ghost"
         size="sm"
@@ -58,7 +58,7 @@ const NAV_ITEMS = [
           <span class="text-(--color-text-muted)">Financial Mindfulness</span>
         </div>
         <!-- Close button: mobile only, inside branding row -->
-        <app-button
+        <lib-button
           class="lg:hidden -mr-2 -mt-1 shrink-0"
           variant="ghost"
           size="sm"
