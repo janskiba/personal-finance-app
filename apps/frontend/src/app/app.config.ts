@@ -5,7 +5,7 @@ import {
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { appRoutes } from './app.routes';
-import { initTheme } from './shared/theme/init-theme';
+import { initTheme } from '@packages/ui';
 
 export const appConfig: ApplicationConfig = {
   providers: [

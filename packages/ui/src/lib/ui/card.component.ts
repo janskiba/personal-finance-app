@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, computed, input } from '@angular/co
 type CardPadding = 'none' | 'sm' | 'md' | 'lg';
 
 @Component({
-  selector: 'app-card',
+  selector: 'lib-card',
   standalone: true,
   imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,

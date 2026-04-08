@@ -3,7 +3,7 @@ import { LucideDynamicIcon, LucideMoon, LucideSun, LucideUser } from '@lucide/an
 import { ThemeService } from '../theme/theme.service';
 
 @Component({
-  selector: 'app-header',
+  selector: 'lib-header',
   standalone: true,
   imports: [LucideDynamicIcon],
   changeDetection: ChangeDetectionStrategy.OnPush,
