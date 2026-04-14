@@ -1,15 +1,13 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { CardComponent } from '@packages/ui';
 import { BalanceActions } from '../state/balance.actions';
 import { selectData, selectError, selectLoading } from '../state/balance.selectors';
 
 @Component({
   selector: 'app-balance',
-  imports: [],
-  template: `<section
-    class="rounded-2xl border border-(--color-border) bg-(--color-surface) p-5 sm:p-6"
-    aria-live="polite"
-  >
+  imports: [CardComponent],
+  template: `<lib-card aria-live="polite">
     <p
       class="m-0 flex items-center gap-2 text-[1rem] leading-tight font-medium text-(--color-text-muted) sm:text-[1.5rem]"
     >
@@ -37,7 +35,7 @@ import { selectData, selectError, selectLoading } from '../state/balance.selecto
         <span> $ {{ balance()?.balance }}</span>
       </p>
     }
-  </section>`,
+  </lib-card>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BalanceComponent implements OnInit {
