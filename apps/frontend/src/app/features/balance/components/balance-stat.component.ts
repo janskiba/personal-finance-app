@@ -1,0 +1,54 @@
+import { CurrencyPipe } from '@angular/common';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { CardComponent } from '@packages/ui';
+import { selectData, selectError, selectLoading } from '../state/balance.selectors';
+
+export type BalanceStatType = 'income' | 'expenses';
+
+@Component({
+  selector: 'app-balance-stat',
+  imports: [CurrencyPipe, CardComponent],
+  template: `
+    <lib-card aria-live="polite">
+      <p class="m-0 text-[0.7rem] font-semibold uppercase tracking-widest text-(--color-text-muted)">
+        {{ config().label }}
+      </p>
+
+      @if (error()) {
+        <p class="mt-3 text-[0.95rem] text-[#b42318]">{{ error() }}</p>
+      } @else {
+        <p
+          class="mt-3 text-[clamp(1.25rem,5vw,2rem)] font-bold tracking-[-0.03em]"
+          [class]="config().colorClass"
+          [class.opacity-40]="isLoading() && !balance()"
+        >
+          {{ config().prefix }}{{ amount() | currency: 'USD' : 'symbol' : '1.0-0' }}
+        </p>
+      }
+    </lib-card>
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class BalanceStatComponent {
+  readonly type = input.required<BalanceStatType>();
+
+  private readonly store = inject(Store);
+
+  readonly balance = this.store.selectSignal(selectData);
+  readonly isLoading = this.store.selectSignal(selectLoading);
+  readonly error = this.store.selectSignal(selectError);
+
+  readonly config = computed(() => {
+    const configs: Record<BalanceStatType, { label: string; prefix: string; colorClass: string }> = {
+      income: { label: 'Income', prefix: '+', colorClass: 'text-(--color-primary)' },
+      expenses: { label: 'Expenses', prefix: '-', colorClass: 'text-[#9b3e2a]' },
+    };
+    return configs[this.type()];
+  });
+
+  readonly amount = computed(() => {
+    const data = this.balance();
+    return this.type() === 'income' ? data?.income : data?.expenses;
+  });
+}
