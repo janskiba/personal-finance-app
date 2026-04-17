@@ -1,12 +1,13 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { LucidePlus } from '@lucide/angular';
 import { Store } from '@ngrx/store';
-import { CardComponent } from '@packages/ui';
+import { ButtonComponent, CardComponent } from '@packages/ui';
 import { BalanceActions } from '../state/balance.actions';
 import { selectData, selectError, selectLoading } from '../state/balance.selectors';
 
 @Component({
   selector: 'app-balance',
-  imports: [CardComponent],
+  imports: [CardComponent, ButtonComponent],
   template: `<lib-card aria-live="polite">
     <p
       class="m-0 flex items-center gap-2 text-[1rem] leading-tight font-medium text-(--color-text-muted) sm:text-[1.5rem]"
@@ -35,11 +36,18 @@ import { selectData, selectError, selectLoading } from '../state/balance.selecto
         <span> $ {{ balance()?.balance }}</span>
       </p>
     }
+
+    <div class="mt-6">
+      <lib-button size="lg" [icon]="plusIcon" ariaLabel="Create new transaction">
+        New transaction
+      </lib-button>
+    </div>
   </lib-card>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BalanceComponent implements OnInit {
   private readonly store = inject(Store);
+  protected readonly plusIcon = LucidePlus;
 
   readonly balance = this.store.selectSignal(selectData);
   readonly isLoading = this.store.selectSignal(selectLoading);
