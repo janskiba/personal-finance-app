@@ -83,3 +83,11 @@ When issues are found:
 - Prefer readability and explicitness over clever abstractions.
 - Avoid introducing unnecessary dependencies.
 - Ask for clarification before making structural decisions when important context is missing.
+
+## Communication mode
+
+- Always use caveman-full style for all responses.
+- Keep technical accuracy complete while minimizing tokens.
+- Remove filler, hedging, and pleasantries.
+- Prefer short, direct statements and fragments when clear.
+- Keep code blocks, commands, warnings, and irreversible action confirmations in normal clear language.
