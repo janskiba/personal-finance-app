@@ -39,6 +39,7 @@ Your job is to implement, refactor, review, and explain Angular frontend code th
 ## Data and forms rules
 
 - Prefer strongly typed `input`, `output`, forms, models, and API mappings.
+- Reuse and verify shared domain types from `packages/types` before introducing frontend-local duplicates.
 - Prefer reactive patterns and predictable state flow.
 - For non-trivial forms, prefer Reactive Forms.
 - Prefer the `async` pipe for observable-based rendering.
@@ -61,6 +62,7 @@ Your job is to implement, refactor, review, and explain Angular frontend code th
 
 When reviewing code, check for:
 - weak typing,
+- missing or inconsistent usage of shared types from `packages/types`,
 - template complexity,
 - business logic inside components,
 - unnecessary manual subscriptions,

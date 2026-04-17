@@ -16,6 +16,7 @@ Provide project context and coding guidelines that AI should follow when generat
 - Keep templates simple and readable; avoid complex inline expressions.
 - Prefer moving derived state and transformation logic into `computed`, helpers, presenters, or services.
 - Prefer strongly typed `input`, `output`, forms, models, and API mappings.
+- Reuse and verify shared domain types from `packages/types` before introducing frontend-local duplicates.
 - Prefer reactive patterns and predictable state flow.
 - For non-trivial forms, prefer Reactive Forms.
 - Keep HTTP calls, DTO mapping, and backend integration logic out of components.
