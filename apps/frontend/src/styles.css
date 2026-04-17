@@ -7,12 +7,38 @@
   }
 
   textarea,
+  select,
   input:not([type='checkbox']):not([type='radio']):not([type='range']):not([type='file']) {
-    @apply w-full rounded-xl bg-white px-4 py-3 text-sm text-slate-800 shadow-sm
-      ring-1 ring-slate-200 placeholder:text-slate-400
+    @apply w-full rounded-xl bg-(--color-surface) px-4 py-3 text-sm text-(--color-text) shadow-sm
+      ring-1 ring-(--color-border) placeholder:text-(--color-text-muted)
       transition-shadow
-      hover:ring-slate-300
-      focus:outline-none focus:ring-2 focus:ring-teal-600 focus:ring-offset-1
+      hover:ring-(--color-text-muted)
+      focus:outline-none focus:ring-2 focus:ring-(--color-primary) focus:ring-offset-1
       disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  input[type='date'],
+  select {
+    color-scheme: light;
+  }
+
+  [data-theme='dark'] input[type='date'],
+  [data-theme='dark'] select {
+    color-scheme: dark;
+  }
+
+  [data-theme='dark'] input[type='date']::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) input[type='date'],
+    :root:not([data-theme]) select {
+      color-scheme: dark;
+    }
+
+    :root:not([data-theme]) input[type='date']::-webkit-calendar-picker-indicator {
+      filter: invert(1);
+    }
   }
 }
