@@ -33,6 +33,7 @@ Your job is to implement, refactor, review, and explain Angular frontend code th
 - Do not put complex business logic in components or templates.
 - Move derived state and transformation logic into `computed`, helpers, presenters, or services.
 - Prefer reusable presentational components when UI patterns repeat.
+- Prefer existing reusable components from `packages/ui` when possible before introducing new UI components.
 - Use stable list tracking such as `trackBy` or the appropriate Angular control-flow tracking mechanism.
 
 ## Data and forms rules
