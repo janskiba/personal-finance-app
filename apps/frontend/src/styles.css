@@ -17,6 +17,10 @@
       disabled:cursor-not-allowed disabled:opacity-50;
   }
 
+  select {
+    @apply py-2 pr-10 leading-5;
+  }
+
   input[type='date'],
   select {
     color-scheme: light;
