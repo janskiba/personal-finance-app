@@ -29,5 +29,9 @@ export const transactionsFeature = createFeature({
       loading: false,
       error,
     })),
+    on(TransactionsActions.addTransaction, (state, { transaction }) => ({
+      ...state,
+      transactions: [transaction, ...state.transactions],
+    })),
   ),
 });

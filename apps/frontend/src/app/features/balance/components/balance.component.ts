@@ -1,13 +1,16 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { LucidePlus } from '@lucide/angular';
 import { Store } from '@ngrx/store';
-import { ButtonComponent, CardComponent } from '@packages/ui';
+import { ButtonComponent, CardComponent, DialogComponent } from '@packages/ui';
+import { Transaction } from '@packages/types';
+import { NewTransactionComponent, NewTransactionDraft } from '../../transactions/components/new-transaction.component';
 import { BalanceActions } from '../state/balance.actions';
 import { selectData, selectError, selectLoading } from '../state/balance.selectors';
+import { TransactionsActions } from '../../transactions/state/transactions.actions';
 
 @Component({
   selector: 'app-balance',
-  imports: [CardComponent, ButtonComponent],
+  imports: [CardComponent, ButtonComponent, DialogComponent, NewTransactionComponent],
   template: `<lib-card aria-live="polite">
     <p
       class="m-0 flex items-center gap-2 text-[1rem] leading-tight font-medium text-(--color-text-muted) sm:text-[1.5rem]"
@@ -38,16 +41,32 @@ import { selectData, selectError, selectLoading } from '../state/balance.selecto
     }
 
     <div class="mt-6">
-      <lib-button size="lg" [icon]="plusIcon" ariaLabel="Create new transaction">
+      <lib-button size="lg" [icon]="plusIcon" ariaLabel="Create new transaction" (click)="openDialog()">
         New transaction
       </lib-button>
     </div>
-  </lib-card>`,
+  </lib-card>
+
+  @if (isDialogOpen()) {
+    <lib-dialog (closeDialog)="closeDialog()" width="md">
+      <span dialog-title>New transaction</span>
+
+      <div dialog-content>
+        <app-new-transaction #newTransactionForm (createTransaction)="addTransaction($event)" />
+      </div>
+
+      <div dialog-actions>
+        <lib-button type="button" variant="ghost" (click)="closeDialog()">Cancel</lib-button>
+        <lib-button type="button" (click)="newTransactionForm.submit()">Add transaction</lib-button>
+      </div>
+    </lib-dialog>
+  }`,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BalanceComponent implements OnInit {
   private readonly store = inject(Store);
   protected readonly plusIcon = LucidePlus;
+  protected readonly isDialogOpen = signal(false);
 
   readonly balance = this.store.selectSignal(selectData);
   readonly isLoading = this.store.selectSignal(selectLoading);
@@ -55,5 +74,23 @@ export class BalanceComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(BalanceActions.loadBalance());
+  }
+
+  protected openDialog(): void {
+    this.isDialogOpen.set(true);
+  }
+
+  protected closeDialog(): void {
+    this.isDialogOpen.set(false);
+  }
+
+  protected addTransaction(draft: NewTransactionDraft): void {
+    const transaction: Transaction = {
+      ...draft,
+      id: crypto.randomUUID(),
+    };
+
+    this.store.dispatch(TransactionsActions.addTransaction({ transaction }));
+    this.closeDialog();
   }
 }
