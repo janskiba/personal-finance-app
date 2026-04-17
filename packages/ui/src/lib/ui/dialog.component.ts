@@ -9,7 +9,7 @@ import { LucideDynamicIcon, LucideX } from '@lucide/angular';
   template: `
     <!-- Backdrop -->
     <div
-      class="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm"
+      class="fixed inset-0 z-[100] bg-black/40 backdrop-blur-sm"
       aria-hidden="true"
       (click)="closeDialog.emit()"
     ></div>
@@ -18,7 +18,7 @@ import { LucideDynamicIcon, LucideX } from '@lucide/angular';
     <div
       role="dialog"
       aria-modal="true"
-      class="fixed inset-0 z-50 flex items-center justify-center p-4"
+      class="fixed inset-0 z-[110] flex items-center justify-center p-4"
     >
       <div [class]="panelClasses()">
         <!-- Header -->
