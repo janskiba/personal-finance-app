@@ -3,7 +3,7 @@ import { LucideDynamicIcon, LucideX } from '@lucide/angular';
 
 @Component({
   selector: 'lib-dialog',
-  standalone: true,
+
   imports: [LucideDynamicIcon],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `

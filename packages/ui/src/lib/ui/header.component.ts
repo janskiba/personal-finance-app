@@ -4,7 +4,7 @@ import { ThemeService } from '../theme/theme.service';
 
 @Component({
   selector: 'lib-header',
-  standalone: true,
+
   imports: [LucideDynamicIcon],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
