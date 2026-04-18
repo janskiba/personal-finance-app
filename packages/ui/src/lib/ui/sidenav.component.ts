@@ -18,7 +18,7 @@ const NAV_ITEMS = [
 
 @Component({
   selector: 'lib-sidenav',
-  standalone: true,
+
   imports: [RouterLink, RouterLinkActive, LucideDynamicIcon, ButtonComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `

@@ -7,7 +7,7 @@ type ButtonType = 'button' | 'submit' | 'reset';
 
 @Component({
   selector: 'lib-button',
-  standalone: true,
+
   imports: [LucideDynamicIcon],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `

@@ -4,7 +4,7 @@ type CardPadding = 'none' | 'sm' | 'md' | 'lg';
 
 @Component({
   selector: 'lib-card',
-  standalone: true,
+
   imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
