@@ -82,7 +82,7 @@ export class TransactionComponent {
     effect(() => {
       const initial = this.initialValue();
       if (!initial) return;
-      const amountStr = initial.amount > 0 ? String(initial.amount).replace('.', ',') : '';
+      const amountStr = initial.amount > 0 ? initial.amount.toFixed(2).replace('.', ',') : '';
       this.amountInput.set(amountStr);
       this.formValue.set({
         amount: initial.amount,
