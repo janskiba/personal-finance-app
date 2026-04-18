@@ -33,5 +33,9 @@ export const transactionsFeature = createFeature({
       ...state,
       transactions: [transaction, ...state.transactions],
     })),
+    on(TransactionsActions.updateTransaction, (state, { transaction }) => ({
+      ...state,
+      transactions: state.transactions.map((t) => (t.id === transaction.id ? transaction : t)),
+    })),
   ),
 });

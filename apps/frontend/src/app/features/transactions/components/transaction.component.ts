@@ -1,14 +1,14 @@
-import { ChangeDetectionStrategy, Component, computed, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, input, output, signal } from '@angular/core';
 import { Category, Transaction } from '@packages/types';
 
-export type NewTransactionDraft = Pick<Transaction, 'amount' | 'category' | 'description' | 'date'>;
+export type TransactionDraft = Pick<Transaction, 'amount' | 'category' | 'description' | 'date'>;
 
 const CATEGORIES: Category[] = ['Food', 'Transport', 'Entertainment', 'Utilities', 'Other'];
 
 type NewTransactionFormValue = Omit<Transaction, 'id'>;
 
 @Component({
-  selector: 'app-new-transaction',
+  selector: 'app-transaction',
   template: `<form (ngSubmit)="submit()" class="grid gap-4">
     <div class="grid gap-2">
       <label for="transaction-amount" class="text-sm font-medium text-(--color-text)">Amount (max {{ MAX_AMOUNT }})</label>
@@ -27,13 +27,12 @@ type NewTransactionFormValue = Omit<Transaction, 'id'>;
       <label for="transaction-category" class="text-sm font-medium text-(--color-text)">Category</label>
       <select
         id="transaction-category"
-        [value]="formValue().category"
         (change)="onCategoryChange($event)"
         class="h-10 rounded-lg border border-(--color-border) bg-(--color-surface) px-3 text-sm text-(--color-text)
                focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--color-primary)"
       >
         @for (category of categories; track category) {
-          <option [value]="category">{{ category }}</option>
+          <option [value]="category" [selected]="formValue().category === category">{{ category }}</option>
         }
       </select>
     </div>
@@ -65,8 +64,9 @@ type NewTransactionFormValue = Omit<Transaction, 'id'>;
   </form>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NewTransactionComponent {
-  readonly createTransaction = output<NewTransactionDraft>();
+export class TransactionComponent {
+  readonly createTransaction = output<TransactionDraft>();
+  readonly initialValue = input<TransactionDraft | null>(null);
   readonly categories = CATEGORIES;
   readonly amountInput = signal('');
   readonly MAX_AMOUNT = 9999999;
@@ -77,6 +77,21 @@ export class NewTransactionComponent {
     date: this.getTodayDateInputValue(),
     description: '',
   });
+
+  constructor() {
+    effect(() => {
+      const initial = this.initialValue();
+      if (!initial) return;
+      const amountStr = initial.amount > 0 ? String(initial.amount).replace('.', ',') : '';
+      this.amountInput.set(amountStr);
+      this.formValue.set({
+        amount: initial.amount,
+        category: initial.category,
+        date: initial.date,
+        description: initial.description ?? '',
+      });
+    });
+  }
 
   readonly isFormValid = computed(() => {
     const value = this.formValue();
