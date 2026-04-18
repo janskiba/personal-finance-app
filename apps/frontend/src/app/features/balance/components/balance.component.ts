@@ -3,14 +3,14 @@ import { LucidePlus } from '@lucide/angular';
 import { Store } from '@ngrx/store';
 import { ButtonComponent, CardComponent, DialogComponent } from '@packages/ui';
 import { Transaction } from '@packages/types';
-import { NewTransactionComponent, NewTransactionDraft } from '../../transactions/components/new-transaction.component';
+import { TransactionComponent, TransactionDraft } from '../../transactions/components/transaction.component';
 import { BalanceActions } from '../state/balance.actions';
 import { selectData, selectError, selectLoading } from '../state/balance.selectors';
 import { TransactionsActions } from '../../transactions/state/transactions.actions';
 
 @Component({
   selector: 'app-balance',
-  imports: [CardComponent, ButtonComponent, DialogComponent, NewTransactionComponent],
+  imports: [CardComponent, ButtonComponent, DialogComponent, TransactionComponent],
   template: `<lib-card aria-live="polite">
     <p
       class="m-0 flex items-center gap-2 text-[1rem] leading-tight font-medium text-(--color-text-muted) sm:text-[1.5rem]"
@@ -52,7 +52,7 @@ import { TransactionsActions } from '../../transactions/state/transactions.actio
       <span dialog-title>New transaction</span>
 
       <div dialog-content>
-        <app-new-transaction #newTransactionForm (createTransaction)="addTransaction($event)" />
+        <app-transaction #newTransactionForm (createTransaction)="addTransaction($event)" />
       </div>
 
       <div dialog-actions>
@@ -84,7 +84,7 @@ export class BalanceComponent implements OnInit {
     this.isDialogOpen.set(false);
   }
 
-  protected addTransaction(draft: NewTransactionDraft): void {
+  protected addTransaction(draft: TransactionDraft): void {
     const transaction: Transaction = {
       ...draft,
       id: crypto.randomUUID(),
