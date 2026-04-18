@@ -21,5 +21,6 @@ import { TransactionListComponent } from '../features/transactions/components/tr
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DashboardComponent {}
+export class DashboardComponent  {
+}
 
