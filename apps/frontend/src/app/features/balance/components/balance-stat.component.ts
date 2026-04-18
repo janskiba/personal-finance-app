@@ -1,8 +1,7 @@
 import { CurrencyPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { CardComponent } from '@packages/ui';
-import { selectData, selectError, selectLoading } from '../state/balance.selectors';
+import { BalanceFacadeService } from '../balance-facade.service';
 
 export type BalanceStatType = 'income' | 'expenses';
 
@@ -23,7 +22,7 @@ export type BalanceStatType = 'income' | 'expenses';
           [class]="config().colorClass"
           [class.opacity-40]="isLoading() && !balance()"
         >
-          {{ config().prefix }}{{ amount() | currency: 'USD' : 'symbol' : '1.0-0' }}
+          {{ config().prefix }}{{ amount() | currency: 'USD' : 'symbol' : '1.2-2' }}
         </p>
       }
     </lib-card>
@@ -33,11 +32,11 @@ export type BalanceStatType = 'income' | 'expenses';
 export class BalanceStatComponent {
   readonly type = input.required<BalanceStatType>();
 
-  private readonly store = inject(Store);
+  private readonly balanceFacade = inject(BalanceFacadeService);
 
-  readonly balance = this.store.selectSignal(selectData);
-  readonly isLoading = this.store.selectSignal(selectLoading);
-  readonly error = this.store.selectSignal(selectError);
+  readonly balance = this.balanceFacade.balance;
+  readonly isLoading = this.balanceFacade.isLoading;
+  readonly error = this.balanceFacade.error;
 
   readonly config = computed(() => {
     const configs: Record<BalanceStatType, { label: string; prefix: string; colorClass: string }> = {
