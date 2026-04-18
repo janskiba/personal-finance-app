@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, OnInit, signal } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Transaction } from '@packages/types';
 import { ButtonComponent, CardComponent, DialogComponent } from '@packages/ui';
@@ -50,10 +50,14 @@ import { TransactionListItemComponent, TransactionListMode } from './transaction
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TransactionListComponent {
+export class TransactionListComponent implements OnInit {
   readonly mode = input<TransactionListMode>('full');
 
   private readonly store = inject(Store);
+
+  ngOnInit() {
+    this.store.dispatch(TransactionsActions.loadTransactions());
+  }
 
   readonly transactions = this.store.selectSignal(selectTransactions);
 
