@@ -11,12 +11,11 @@ type NewTransactionFormValue = Omit<Transaction, 'id'>;
   selector: 'app-new-transaction',
   template: `<form (ngSubmit)="submit()" class="grid gap-4">
     <div class="grid gap-2">
-      <label for="transaction-amount" class="text-sm font-medium text-(--color-text)">Amount</label>
+      <label for="transaction-amount" class="text-sm font-medium text-(--color-text)">Amount (max {{ MAX_AMOUNT }})</label>
       <input
         id="transaction-amount"
         type="text"
         inputmode="decimal"
-        maxlength="10"
         [value]="amountInput()"
         (input)="onAmountInput($event)"
         class="h-10 rounded-lg border border-(--color-border) bg-(--color-surface) px-3 text-sm text-(--color-text)
@@ -70,6 +69,7 @@ export class NewTransactionComponent {
   readonly createTransaction = output<NewTransactionDraft>();
   readonly categories = CATEGORIES;
   readonly amountInput = signal('');
+  readonly MAX_AMOUNT = 9999999;
 
   readonly formValue = signal<NewTransactionFormValue>({
     amount: 0,
@@ -103,41 +103,47 @@ export class NewTransactionComponent {
     });
   }
 
-  protected onAmountInput(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    const formattedValue = this.formatAmountInput(input.value);
-    input.value = formattedValue;
-    this.amountInput.set(formattedValue);
+protected onAmountInput(event: Event): void {
+  const input = event.target as HTMLInputElement;
+  const formatted = this.formatAmountInput(input.value);
 
-    const value = Number(formattedValue.replace(',', '.'));
-    const normalizedValue = Number.isFinite(value) ? Math.max(0, value) : 0;
+  // Always write back to DOM to enforce sanitized value
+  input.value = formatted;
+  this.amountInput.set(formatted);
 
-    this.formValue.update((current) => ({
-      ...current,
-      amount: normalizedValue,
-    }));
-  }
+  const numeric = parseFloat(formatted.replace(',', '.'));
+  const amount = Number.isFinite(numeric) ? numeric : 0;
 
-  private formatAmountInput(rawValue: string): string {
-    const normalizedRawValue = rawValue.replace(/\./g, ',').replace(/[^\d,]/g, '');
-    const separatorIndex = normalizedRawValue.indexOf(',');
+  this.formValue.update((curr) => ({ ...curr, amount }));
+}
 
-    const integerPart =
-      separatorIndex === -1
-        ? normalizedRawValue
-        : normalizedRawValue.slice(0, separatorIndex);
-    const fractionalSource =
-      separatorIndex === -1
-        ? ''
-        : normalizedRawValue.slice(separatorIndex + 1).replace(/,/g, '');
-    const fractionalPart = fractionalSource.slice(0, 2);
+private formatAmountInput(raw: string): string {
+  // 1. Normalize: dots → commas, strip anything that's not a digit or comma
+  const normalized = raw.replace(/\./g, ',').replace(/[^\d,]/g, '');
 
-    if (separatorIndex === -1) {
-      return integerPart;
-    }
+  // 2. Split on FIRST comma only — ignore all subsequent ones
+  const commaIndex = normalized.indexOf(',');
+  const rawInteger = commaIndex === -1 ? normalized : normalized.slice(0, commaIndex);
+  const rawFraction = commaIndex === -1 ? '' : normalized.slice(commaIndex + 1).replace(/,/g, '');
 
-    return `${integerPart || '0'},${fractionalPart}`;
-  }
+  // 3. Clamp integer part: strip leading zeros, max 7 digits (9 999 999)
+  const clampedInteger = rawInteger
+    .replace(/^0+(\d)/, '$1')           // strip leading zeros: "007" → "7"
+    .slice(0, 7);                        // max 7 digits
+
+  // 4. Enforce MAX_AMOUNT = 9_999_999
+  const integerNum = parseInt(clampedInteger || '0', 10);
+  const finalInteger = integerNum > this.MAX_AMOUNT
+    ? String(this.MAX_AMOUNT)
+    : clampedInteger;
+
+  // 5. Fraction: max 2 digits
+  const finalFraction = rawFraction.slice(0, 2);
+
+  // 6. Rebuild: only include comma if user typed it
+  if (commaIndex === -1) return finalInteger;
+  return `${finalInteger || '0'},${finalFraction}`;
+}
 
   protected onCategoryChange(event: Event): void {
     const value = (event.target as HTMLSelectElement).value;
