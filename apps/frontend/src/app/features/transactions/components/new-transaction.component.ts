@@ -69,7 +69,7 @@ type NewTransactionFormValue = Omit<Transaction, 'id'>;
 export class NewTransactionComponent {
   readonly createTransaction = output<NewTransactionDraft>();
   readonly categories = CATEGORIES;
-  readonly amountInput = signal('0');
+  readonly amountInput = signal('');
 
   readonly formValue = signal<NewTransactionFormValue>({
     amount: 0,
@@ -78,7 +78,7 @@ export class NewTransactionComponent {
     description: '',
   });
 
-  private readonly isFormValid = computed(() => {
+  readonly isFormValid = computed(() => {
     const value = this.formValue();
     return (
       Number.isFinite(value.amount) &&
