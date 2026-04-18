@@ -57,7 +57,7 @@ import { TransactionsActions } from '../../transactions/state/transactions.actio
 
       <div dialog-actions>
         <lib-button type="button" variant="ghost" (click)="closeDialog()">Cancel</lib-button>
-        <lib-button type="button" (click)="newTransactionForm.submit()">Add transaction</lib-button>
+        <lib-button type="button" (click)="newTransactionForm.submit()" [disabled]="!newTransactionForm.isFormValid()">Add transaction</lib-button>
       </div>
     </lib-dialog>
   }`,
