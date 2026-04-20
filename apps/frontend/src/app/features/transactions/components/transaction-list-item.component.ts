@@ -1,17 +1,10 @@
 import { CurrencyPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
-import { Category, Transaction } from '@packages/types';
-import { ChipComponent, type ChipVariant } from '@packages/ui';
+import { Transaction } from '@packages/types';
+import { ChipComponent, CHIP_CLASSES } from '@packages/ui';
 
 export type TransactionListMode = 'full' | 'preview';
 
-const CHIP_CLASSES: Record<Category, ChipVariant> = {
-  Food: 'success',
-  Transport: 'info',
-  Entertainment: 'warning',
-  Utilities: 'primary',
-  Other: 'neutral',
-};
 
 @Component({
   selector: 'app-transaction-list-item',

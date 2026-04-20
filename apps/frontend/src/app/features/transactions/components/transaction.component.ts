@@ -1,20 +1,12 @@
 import { ChangeDetectionStrategy, Component, computed, effect, input, output, signal } from '@angular/core';
 
 import { Category, Transaction, TransactionType } from '@packages/types';
-import { ChipComponent, type ChipVariant } from '@packages/ui';
+import { ChipComponent, CHIP_CLASSES, ChipVariant } from '@packages/ui';
 
 export type TransactionDraft = Pick<Transaction, 'amount' | 'category' | 'description' | 'date' | 'type'>;
 
 const CATEGORIES: Category[] = ['Food', 'Transport', 'Entertainment', 'Utilities', 'Other'];
 const TRANSACTION_TYPES: TransactionType[] = ['income', 'expense'];
-
-const CHIP_CLASSES: Record<Category, ChipVariant> = {
-  Food: 'success',
-  Transport: 'info',
-  Entertainment: 'warning',
-  Utilities: 'primary',
-  Other: 'neutral',
-};
 
 type NewTransactionFormValue = Omit<Transaction, 'id'>;
 
