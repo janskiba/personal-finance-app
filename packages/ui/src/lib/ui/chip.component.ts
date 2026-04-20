@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
+import { Category } from '@packages/types';
 
 export type ChipVariant = 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'neutral';
 export type ChipSize = 'sm' | 'md';
@@ -15,6 +16,14 @@ const VARIANT_CLASSES: Record<ChipVariant, string> = {
 const SIZE_CLASSES: Record<ChipSize, string> = {
   sm: 'px-2.5 py-0.5 text-xs font-semibold',
   md: 'px-3 py-1 text-sm font-medium',
+};
+
+export const CHIP_CLASSES: Record<Category, ChipVariant> = {
+  Food: 'success',
+  Transport: 'info',
+  Entertainment: 'warning',
+  Utilities: 'primary',
+  Other: 'neutral',
 };
 
 @Component({
