@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { DashboardComponent } from './dashboard.component';
+import { SessionService } from '../session/session.service';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -17,14 +18,20 @@ describe('DashboardComponent', () => {
               loading: false,
               error: null,
             },
+            transactions: {
+              transactions: [],
+              loading: false,
+              error: null,
+            },
           },
         }),
+        SessionService,
       ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(DashboardComponent);
     component = fixture.componentInstance;
-    await fixture.whenStable();
+    fixture.detectChanges();
   });
 
   it('should create', () => {
