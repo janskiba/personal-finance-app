@@ -65,7 +65,7 @@ export class TransactionListComponent implements OnInit {
   readonly editingTransactionDraft = computed(() => {
     const t = this.editingTransaction();
     if (!t) return null;
-    return { amount: t.amount, category: t.category, date: t.date, description: t.description };
+    return { amount: t.amount, category: t.category, type: t.type, date: t.date, description: t.description };
   });
 
   protected startEdit(transaction: Transaction): void {

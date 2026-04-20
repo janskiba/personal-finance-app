@@ -1,15 +1,42 @@
 import { ChangeDetectionStrategy, Component, computed, effect, input, output, signal } from '@angular/core';
-import { Category, Transaction } from '@packages/types';
 
-export type TransactionDraft = Pick<Transaction, 'amount' | 'category' | 'description' | 'date'>;
+import { Category, Transaction, TransactionType } from '@packages/types';
+import { ChipComponent, type ChipVariant } from '@packages/ui';
+
+export type TransactionDraft = Pick<Transaction, 'amount' | 'category' | 'description' | 'date' | 'type'>;
 
 const CATEGORIES: Category[] = ['Food', 'Transport', 'Entertainment', 'Utilities', 'Other'];
+const TRANSACTION_TYPES: TransactionType[] = ['income', 'expense'];
+
+const CHIP_CLASSES: Record<Category, ChipVariant> = {
+  Food: 'success',
+  Transport: 'info',
+  Entertainment: 'warning',
+  Utilities: 'primary',
+  Other: 'neutral',
+};
 
 type NewTransactionFormValue = Omit<Transaction, 'id'>;
 
 @Component({
   selector: 'app-transaction',
+  imports: [ChipComponent],
   template: `<form (ngSubmit)="submit()" class="grid gap-4">
+    <div class="grid gap-2">
+      <span class="text-sm font-medium text-(--color-text)">Type</span>
+      <div class="flex gap-2">
+        @for (type of transactionTypes; track type) {
+          <lib-chip
+            [value]="type"
+            [variant]="type === 'income' ? 'success' : 'danger'"
+            [selectable]="true"
+            [selected]="formValue().type === type"
+            (select)="onTypeChange($event)"
+          />
+        }
+      </div>
+    </div>
+
     <div class="grid gap-2">
       <label for="transaction-amount" class="text-sm font-medium text-(--color-text)">Amount (max {{ MAX_AMOUNT }})</label>
       <input
@@ -24,17 +51,18 @@ type NewTransactionFormValue = Omit<Transaction, 'id'>;
     </div>
 
     <div class="grid gap-2">
-      <label for="transaction-category" class="text-sm font-medium text-(--color-text)">Category</label>
-      <select
-        id="transaction-category"
-        (change)="onCategoryChange($event)"
-        class="h-10 rounded-lg border border-(--color-border) bg-(--color-surface) px-3 text-sm text-(--color-text)
-               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--color-primary)"
-      >
+      <span class="text-sm font-medium text-(--color-text)">Category</span>
+      <div class="flex flex-wrap gap-2">
         @for (category of categories; track category) {
-          <option [value]="category" [selected]="formValue().category === category">{{ category }}</option>
+          <lib-chip
+            [value]="category"
+            [variant]="getCategoryVariant(category)"
+            [selectable]="true"
+            [selected]="formValue().category === category"
+            (select)="onCategoryChange($event)"
+          />
         }
-      </select>
+      </div>
     </div>
 
     <div class="grid gap-2">
@@ -68,12 +96,14 @@ export class TransactionComponent {
   readonly createTransaction = output<TransactionDraft>();
   readonly initialValue = input<TransactionDraft | null>(null);
   readonly categories = CATEGORIES;
+  readonly transactionTypes = TRANSACTION_TYPES;
   readonly amountInput = signal('');
   readonly MAX_AMOUNT = 9999999;
 
   readonly formValue = signal<NewTransactionFormValue>({
     amount: 0,
     category: 'Other',
+    type: 'expense',
     date: this.getTodayDateInputValue(),
     description: '',
   });
@@ -87,6 +117,7 @@ export class TransactionComponent {
       this.formValue.set({
         amount: initial.amount,
         category: initial.category,
+        type: initial.type,
         date: initial.date,
         description: initial.description ?? '',
       });
@@ -99,6 +130,7 @@ export class TransactionComponent {
       Number.isFinite(value.amount) &&
       value.amount >= 0.01 &&
       CATEGORIES.includes(value.category) &&
+      TRANSACTION_TYPES.includes(value.type) &&
       value.date.trim().length > 0 &&
       (value.description?.length ?? 0) <= 200
     );
@@ -113,6 +145,7 @@ export class TransactionComponent {
     this.createTransaction.emit({
       amount: value.amount,
       category: value.category,
+      type: value.type,
       description: value.description || undefined,
       date: value.date,
     });
@@ -160,8 +193,7 @@ private formatAmountInput(raw: string): string {
   return `${finalInteger || '0'},${finalFraction}`;
 }
 
-  protected onCategoryChange(event: Event): void {
-    const value = (event.target as HTMLSelectElement).value;
+  protected onCategoryChange(value: string): void {
     if (!this.isCategory(value)) {
       return;
     }
@@ -169,6 +201,17 @@ private formatAmountInput(raw: string): string {
     this.formValue.update((current) => ({
       ...current,
       category: value,
+    }));
+  }
+
+  protected onTypeChange(value: string): void {
+    if (!this.isTransactionType(value)) {
+      return;
+    }
+
+    this.formValue.update((current) => ({
+      ...current,
+      type: value,
     }));
   }
 
@@ -190,6 +233,14 @@ private formatAmountInput(raw: string): string {
 
   private isCategory(value: string): value is Category {
     return CATEGORIES.includes(value as Category);
+  }
+
+  private isTransactionType(value: string): value is TransactionType {
+    return TRANSACTION_TYPES.includes(value as TransactionType);
+  }
+
+  protected getCategoryVariant(category: Category): ChipVariant {
+    return CHIP_CLASSES[category];
   }
 
   private getTodayDateInputValue(): string {

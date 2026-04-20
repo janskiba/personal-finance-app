@@ -1,5 +1,6 @@
 export { ButtonComponent } from './lib/ui/button.component';
 export { CardComponent } from './lib/ui/card.component';
+export { ChipComponent, type ChipVariant, type ChipSize } from './lib/ui/chip.component';
 export { DialogComponent } from './lib/ui/dialog.component';
 export { HeaderComponent } from './lib/ui/header.component';
 export { SidenavComponent } from './lib/ui/sidenav.component';
