@@ -113,11 +113,3 @@ export function loadGuestTransactions(): Transaction[] {
   }
   return GUEST_SEED_TRANSACTIONS;
 }
-
-export function saveGuestTransactions(transactions: Transaction[]): void {
-  try {
-    localStorage.setItem(GUEST_STORAGE_KEY, JSON.stringify(transactions));
-  } catch {
-    // ignore storage errors
-  }
-}

@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Balance } from '@packages/types';
 import { selectTransactions } from '../transactions/state/transactions.selectors';
 import { selectData, selectError, selectLoading } from './state/balance.selectors';
-import { SessionService } from '../../session/session.service';
+import { SessionService } from '../../core/session.service';
 
 @Injectable({ providedIn: 'root' })
 export class BalanceFacadeService {
