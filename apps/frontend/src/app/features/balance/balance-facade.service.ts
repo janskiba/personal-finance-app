@@ -17,8 +17,9 @@ export class BalanceFacadeService {
 
   private readonly guestBalance = computed<Balance>(() => {
     const txs = this.transactions();
-    const income = txs.reduce((sum, t) => sum + t.amount, 0);
-    return { income, expenses: 0, balance: income };
+    const income = txs.filter((t) => t.type === 'income').reduce((sum, t) => sum + t.amount, 0);
+    const expenses = txs.filter((t) => t.type === 'expense').reduce((sum, t) => sum + t.amount, 0);
+    return { income, expenses, balance: income - expenses };
   });
 
   readonly balance = computed<Balance | null>(() =>
