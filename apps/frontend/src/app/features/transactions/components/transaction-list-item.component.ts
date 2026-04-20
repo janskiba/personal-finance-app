@@ -1,28 +1,28 @@
 import { CurrencyPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { Category, Transaction } from '@packages/types';
+import { ChipComponent, type ChipVariant } from '@packages/ui';
 
 export type TransactionListMode = 'full' | 'preview';
 
-const CHIP_CLASSES: Record<Category, string> = {
-  Food: 'bg-green-100 text-green-800',
-  Transport: 'bg-sky-100 text-sky-800',
-  Entertainment: 'bg-violet-100 text-violet-800',
-  Utilities: 'bg-amber-100 text-amber-800',
-  Other: 'bg-gray-100 text-gray-700',
+const CHIP_CLASSES: Record<Category, ChipVariant> = {
+  Food: 'success',
+  Transport: 'info',
+  Entertainment: 'warning',
+  Utilities: 'primary',
+  Other: 'neutral',
 };
 
 @Component({
   selector: 'app-transaction-list-item',
-  imports: [CurrencyPipe],
+  imports: [CurrencyPipe, ChipComponent],
   template: `
     <div class="flex items-center gap-3 py-3">
-      <span
-        class="shrink-0 rounded-full px-2.5 py-0.5 text-xs font-semibold"
-        [class]="chipClasses()"
-      >
-        {{ transaction().category }}
-      </span>
+      <lib-chip
+        [value]="transaction().category"
+        [variant]="chipVariant()"
+        size="sm"
+      />
       <div class="min-w-0 flex-1">
         @if (transaction().description) {
           <p class="m-0 break-words text-sm text-(--color-text)">{{ transaction().description }}</p>
@@ -50,5 +50,5 @@ export class TransactionListItemComponent {
   readonly transaction = input.required<Transaction>();
   readonly mode = input<TransactionListMode>('preview');
   readonly edit = output<Transaction>();
-  readonly chipClasses = computed(() => CHIP_CLASSES[this.transaction().category]);
+  readonly chipVariant = computed(() => CHIP_CLASSES[this.transaction().category]);
 }
