@@ -5,17 +5,12 @@ import { ChipComponent, CHIP_CLASSES } from '@packages/ui';
 
 export type TransactionListMode = 'full' | 'preview';
 
-
 @Component({
   selector: 'app-transaction-list-item',
   imports: [CurrencyPipe, ChipComponent],
   template: `
     <div class="flex items-center gap-3 py-3">
-      <lib-chip
-        [value]="transaction().category"
-        [variant]="chipVariant()"
-        size="sm"
-      />
+      <lib-chip [value]="transaction().category" [variant]="chipVariant()" size="sm" />
       <div class="min-w-0 flex-1">
         @if (transaction().description) {
           <p class="m-0 break-words text-sm text-(--color-text)">{{ transaction().description }}</p>
@@ -23,7 +18,7 @@ export type TransactionListMode = 'full' | 'preview';
         <p class="m-0 text-xs text-(--color-text-muted)">{{ transaction().date }}</p>
       </div>
       <span class="shrink-0 text-sm font-semibold text-(--color-text)">
-        {{ transaction().amount | currency: 'USD' : 'symbol' : '1.2-2' }}
+        {{ amountPrefix() }} {{ transaction().amount | currency: 'USD' : 'symbol' : '1.2-2' }}
       </span>
       @if (mode() === 'full') {
         <button
@@ -44,4 +39,5 @@ export class TransactionListItemComponent {
   readonly mode = input<TransactionListMode>('preview');
   readonly edit = output<Transaction>();
   readonly chipVariant = computed(() => CHIP_CLASSES[this.transaction().category]);
+  readonly amountPrefix = computed(() => (this.transaction().type === 'expense' ? '-' : '+'));
 }
