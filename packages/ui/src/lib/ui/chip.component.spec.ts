@@ -12,6 +12,7 @@ describe('ChipComponent', () => {
 
     fixture = TestBed.createComponent(ChipComponent);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('value', 'test');
     fixture.detectChanges();
   });
 
@@ -20,13 +21,10 @@ describe('ChipComponent', () => {
   });
 
   it('should render as span by default', () => {
-    fixture.componentRef.setInput('value', 'test');
-    fixture.detectChanges();
     expect(fixture.debugElement.nativeElement.querySelector('span')).toBeTruthy();
   });
 
   it('should render as button when selectable', () => {
-    fixture.componentRef.setInput('value', 'test');
     fixture.componentRef.setInput('selectable', true);
     fixture.detectChanges();
     expect(fixture.debugElement.nativeElement.querySelector('button')).toBeTruthy();
@@ -34,11 +32,10 @@ describe('ChipComponent', () => {
 
   it('should emit select event on click', () => {
     let emittedValue: string | undefined;
-    component.select.subscribe((value) => {
+    component.clicked.subscribe((value) => {
       emittedValue = value;
     });
 
-    fixture.componentRef.setInput('value', 'test');
     fixture.componentRef.setInput('selectable', true);
     fixture.detectChanges();
 
