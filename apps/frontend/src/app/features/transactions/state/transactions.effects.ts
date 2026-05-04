@@ -36,6 +36,20 @@ export class TransactionsEffects {
     ),
   );
 
+  deleteTransaction$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(TransactionsActions.deleteTransaction),
+        switchMap(({ id }) => {
+          if (this.sessionService.mode() === 'guest') {
+            return of(void 0);
+          }
+          return this.transactionsService.deleteTransaction(id).pipe(catchError(() => of(void 0)));
+        }),
+      ),
+    { dispatch: false },
+  );
+
   saveTransactionsToStorage$ = createEffect(
     () =>
       this.actions$.pipe(
@@ -43,6 +57,7 @@ export class TransactionsEffects {
           TransactionsActions.loadTransactionsSuccess,
           TransactionsActions.addTransaction,
           TransactionsActions.updateTransaction,
+          TransactionsActions.deleteTransaction,
         ),
         withLatestFrom(this.store.select(selectTransactions)),
         tap(([, transactions]) => {

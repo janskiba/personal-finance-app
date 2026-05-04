@@ -8,6 +8,7 @@ export const TransactionsActions = createActionGroup({
     'Load Transactions Success': props<{ transactions: Transaction[] }>(),
     'Load Transactions Failure': props<{ error: string }>(),
     'Add Transaction': props<{ transaction: Transaction }>(),
-      'Update Transaction': props<{ transaction: Transaction }>(),
+    'Update Transaction': props<{ transaction: Transaction }>(),
+    'Delete Transaction': props<{ id: string }>(),
   },
 });
