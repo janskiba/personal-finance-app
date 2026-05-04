@@ -10,4 +10,8 @@ export class TransactionsService {
   getTransactions(): Observable<Transaction[]> {
     return this.http.get<Transaction[]>('/api/transactions');
   }
+
+  deleteTransaction(id: string): Observable<void> {
+    return this.http.delete<void>(`/api/transactions/${id}`);
+  }
 }

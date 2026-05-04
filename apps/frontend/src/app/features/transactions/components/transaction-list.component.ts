@@ -1,18 +1,39 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input, OnInit, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  input,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Transaction } from '@packages/types';
 import { ButtonComponent, CardComponent, DialogComponent } from '@packages/ui';
 import { selectTransactions } from '../state/transactions.selectors';
 import { TransactionsActions } from '../state/transactions.actions';
 import { TransactionComponent, TransactionDraft } from './transaction.component';
-import { TransactionListItemComponent, TransactionListMode } from './transaction-list-item.component';
+import {
+  TransactionListItemComponent,
+  TransactionListMode,
+} from './transaction-list-item.component';
 
 @Component({
   selector: 'app-transaction-list',
-  imports: [CardComponent, DialogComponent, ButtonComponent, TransactionListItemComponent, TransactionComponent],
+  imports: [
+    CardComponent,
+    DialogComponent,
+    ButtonComponent,
+    TransactionListItemComponent,
+    TransactionComponent,
+  ],
   template: `
     <lib-card>
-      <p class="m-0 text-[0.7rem] font-semibold uppercase tracking-widest text-(--color-text-muted)">Transactions</p>
+      <p
+        class="m-0 text-[0.7rem] font-semibold uppercase tracking-widest text-(--color-text-muted)"
+      >
+        Transactions
+      </p>
 
       @if (!transactions().length) {
         <p class="mt-4 text-sm text-(--color-text-muted)">No transactions yet.</p>
@@ -24,6 +45,7 @@ import { TransactionListItemComponent, TransactionListMode } from './transaction
                 [transaction]="transaction"
                 [mode]="mode()"
                 (edit)="startEdit($event)"
+                (delete)="deleteTransaction($event)"
               />
             </li>
           }
@@ -43,7 +65,9 @@ import { TransactionListItemComponent, TransactionListMode } from './transaction
         </div>
         <div dialog-actions>
           <lib-button type="button" variant="ghost" (click)="cancelEdit()">Cancel</lib-button>
-          <lib-button type="button" (click)="editForm.submit()" [disabled]="!editForm.isFormValid()">Save</lib-button>
+          <lib-button type="button" (click)="editForm.submit()" [disabled]="!editForm.isFormValid()"
+            >Save</lib-button
+          >
         </div>
       </lib-dialog>
     }
@@ -65,7 +89,13 @@ export class TransactionListComponent implements OnInit {
   readonly editingTransactionDraft = computed(() => {
     const t = this.editingTransaction();
     if (!t) return null;
-    return { amount: t.amount, category: t.category, type: t.type, date: t.date, description: t.description };
+    return {
+      amount: t.amount,
+      category: t.category,
+      type: t.type,
+      date: t.date,
+      description: t.description,
+    };
   });
 
   protected startEdit(transaction: Transaction): void {
@@ -79,7 +109,13 @@ export class TransactionListComponent implements OnInit {
   protected saveEdit(draft: TransactionDraft): void {
     const editing = this.editingTransaction();
     if (!editing) return;
-    this.store.dispatch(TransactionsActions.updateTransaction({ transaction: { ...draft, id: editing.id } }));
+    this.store.dispatch(
+      TransactionsActions.updateTransaction({ transaction: { ...draft, id: editing.id } }),
+    );
     this.editingTransaction.set(null);
+  }
+
+  protected deleteTransaction(transaction: Transaction): void {
+    this.store.dispatch(TransactionsActions.deleteTransaction({ id: transaction.id }));
   }
 }

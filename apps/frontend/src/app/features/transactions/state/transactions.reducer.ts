@@ -37,5 +37,9 @@ export const transactionsFeature = createFeature({
       ...state,
       transactions: state.transactions.map((t) => (t.id === transaction.id ? transaction : t)),
     })),
+    on(TransactionsActions.deleteTransaction, (state, { id }) => ({
+      ...state,
+      transactions: state.transactions.filter((t) => t.id !== id),
+    })),
   ),
 });

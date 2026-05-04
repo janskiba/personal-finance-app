@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { DashboardComponent } from './dashboard.component';
-import { SessionService } from '../session/session.service';
+import { SessionService } from '../core/session.service';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
