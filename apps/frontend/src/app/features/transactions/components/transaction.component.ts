@@ -1,9 +1,20 @@
-import { ChangeDetectionStrategy, Component, computed, effect, input, output, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  input,
+  output,
+  signal,
+} from '@angular/core';
 
 import { Category, Transaction, TransactionType } from '@packages/types';
 import { ChipComponent, CHIP_CLASSES, ChipVariant } from '@packages/ui';
 
-export type TransactionDraft = Pick<Transaction, 'amount' | 'category' | 'description' | 'date' | 'type'>;
+export type TransactionDraft = Pick<
+  Transaction,
+  'amount' | 'category' | 'description' | 'date' | 'type'
+>;
 
 const CATEGORIES: Category[] = ['Food', 'Transport', 'Entertainment', 'Utilities', 'Other'];
 const TRANSACTION_TYPES: TransactionType[] = ['income', 'expense'];
@@ -23,14 +34,16 @@ type NewTransactionFormValue = Omit<Transaction, 'id'>;
             [variant]="type === 'income' ? 'success' : 'danger'"
             [selectable]="true"
             [selected]="formValue().type === type"
-            (select)="onTypeChange($event)"
+            (clicked)="onTypeChange($event)"
           />
         }
       </div>
     </div>
 
     <div class="grid gap-2">
-      <label for="transaction-amount" class="text-sm font-medium text-(--color-text)">Amount (max {{ MAX_AMOUNT }})</label>
+      <label for="transaction-amount" class="text-sm font-medium text-(--color-text)"
+        >Amount (max {{ MAX_AMOUNT }})</label
+      >
       <input
         id="transaction-amount"
         type="text"
@@ -51,7 +64,7 @@ type NewTransactionFormValue = Omit<Transaction, 'id'>;
             [variant]="getCategoryVariant(category)"
             [selectable]="true"
             [selected]="formValue().category === category"
-            (select)="onCategoryChange($event)"
+            (clicked)="onCategoryChange($event)"
           />
         }
       </div>
@@ -70,7 +83,9 @@ type NewTransactionFormValue = Omit<Transaction, 'id'>;
     </div>
 
     <div class="grid gap-2">
-      <label for="transaction-description" class="text-sm font-medium text-(--color-text)">Description</label>
+      <label for="transaction-description" class="text-sm font-medium text-(--color-text)"
+        >Description</label
+      >
       <textarea
         id="transaction-description"
         rows="3"
@@ -143,47 +158,45 @@ export class TransactionComponent {
     });
   }
 
-protected onAmountInput(event: Event): void {
-  const input = event.target as HTMLInputElement;
-  const formatted = this.formatAmountInput(input.value);
+  protected onAmountInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const formatted = this.formatAmountInput(input.value);
 
-  // Always write back to DOM to enforce sanitized value
-  input.value = formatted;
-  this.amountInput.set(formatted);
+    // Always write back to DOM to enforce sanitized value
+    input.value = formatted;
+    this.amountInput.set(formatted);
 
-  const numeric = parseFloat(formatted.replace(',', '.'));
-  const amount = Number.isFinite(numeric) ? numeric : 0;
+    const numeric = parseFloat(formatted.replace(',', '.'));
+    const amount = Number.isFinite(numeric) ? numeric : 0;
 
-  this.formValue.update((curr) => ({ ...curr, amount }));
-}
+    this.formValue.update((curr) => ({ ...curr, amount }));
+  }
 
-private formatAmountInput(raw: string): string {
-  // 1. Normalize: dots → commas, strip anything that's not a digit or comma
-  const normalized = raw.replace(/\./g, ',').replace(/[^\d,]/g, '');
+  private formatAmountInput(raw: string): string {
+    // 1. Normalize: dots → commas, strip anything that's not a digit or comma
+    const normalized = raw.replace(/\./g, ',').replace(/[^\d,]/g, '');
 
-  // 2. Split on FIRST comma only — ignore all subsequent ones
-  const commaIndex = normalized.indexOf(',');
-  const rawInteger = commaIndex === -1 ? normalized : normalized.slice(0, commaIndex);
-  const rawFraction = commaIndex === -1 ? '' : normalized.slice(commaIndex + 1).replace(/,/g, '');
+    // 2. Split on FIRST comma only — ignore all subsequent ones
+    const commaIndex = normalized.indexOf(',');
+    const rawInteger = commaIndex === -1 ? normalized : normalized.slice(0, commaIndex);
+    const rawFraction = commaIndex === -1 ? '' : normalized.slice(commaIndex + 1).replace(/,/g, '');
 
-  // 3. Clamp integer part: strip leading zeros, max 7 digits (9 999 999)
-  const clampedInteger = rawInteger
-    .replace(/^0+(\d)/, '$1')           // strip leading zeros: "007" → "7"
-    .slice(0, 7);                        // max 7 digits
+    // 3. Clamp integer part: strip leading zeros, max 7 digits (9 999 999)
+    const clampedInteger = rawInteger
+      .replace(/^0+(\d)/, '$1') // strip leading zeros: "007" → "7"
+      .slice(0, 7); // max 7 digits
 
-  // 4. Enforce MAX_AMOUNT = 9_999_999
-  const integerNum = parseInt(clampedInteger || '0', 10);
-  const finalInteger = integerNum > this.MAX_AMOUNT
-    ? String(this.MAX_AMOUNT)
-    : clampedInteger;
+    // 4. Enforce MAX_AMOUNT = 9_999_999
+    const integerNum = parseInt(clampedInteger || '0', 10);
+    const finalInteger = integerNum > this.MAX_AMOUNT ? String(this.MAX_AMOUNT) : clampedInteger;
 
-  // 5. Fraction: max 2 digits
-  const finalFraction = rawFraction.slice(0, 2);
+    // 5. Fraction: max 2 digits
+    const finalFraction = rawFraction.slice(0, 2);
 
-  // 6. Rebuild: only include comma if user typed it
-  if (commaIndex === -1) return finalInteger;
-  return `${finalInteger || '0'},${finalFraction}`;
-}
+    // 6. Rebuild: only include comma if user typed it
+    if (commaIndex === -1) return finalInteger;
+    return `${finalInteger || '0'},${finalFraction}`;
+  }
 
   protected onCategoryChange(value: string): void {
     if (!this.isCategory(value)) {
