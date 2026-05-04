@@ -1,6 +1,7 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "baseUrl": "../..",
     "isolatedModules": true,
     "target": "es2022",
     "moduleResolution": "bundler",
