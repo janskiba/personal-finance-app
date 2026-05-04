@@ -35,7 +35,7 @@ export const CHIP_CLASSES: Record<Category, ChipVariant> = {
       <button
         type="button"
         [class]="buttonClasses()"
-        (click)="select.emit(value())"
+        (click)="clicked.emit(value())"
         [attr.aria-pressed]="selected()"
       >
         {{ value() }}
@@ -53,7 +53,7 @@ export class ChipComponent {
   readonly size = input<ChipSize>('sm');
   readonly selectable = input<boolean>(false);
   readonly selected = input<boolean>(false);
-  readonly select = output<string>();
+  readonly clicked = output<string>();
 
   readonly chipClasses = computed(() => {
     const variant = VARIANT_CLASSES[this.variant()];
